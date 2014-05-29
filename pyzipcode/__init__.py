@@ -73,17 +73,20 @@ class ZipCodeDatabase(object):
             raise ZipNotFoundException("Could not find zip code you're searching by.")
         else:
             zip = zips[0]
-        
+
+        return self.get_zipcodes_by_coordinates(zip.latitude, zip.longitude, radius)
+
+    def get_zipcodes_by_coordinates(self, lat, lon, radius):
         radius = float(radius)
-        
-        long_range = (zip.longitude-(radius/69.0), zip.longitude+(radius/69.0))
-        lat_range = (zip.latitude-(radius/49.0), zip.latitude+(radius/49.0))
-        
+
+        long_range = (lon-(radius/69.0), lon+(radius/69.0))
+        lat_range = (lat-(radius/49.0), lat+(radius/49.0))
+
         return format_result(self.conn_manager.query(ZIP_RANGE_QUERY % (
             long_range[0], long_range[1],
             lat_range[0], lat_range[1]
-        )))
-                    
+        ), ""))
+
     def find_zip(self, city=None, state=None):
         if city is None:
             city = "%"
