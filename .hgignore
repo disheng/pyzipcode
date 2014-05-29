@@ -3,3 +3,5 @@ syntax: glob
 pyzipcode.egg-info/
 *.pyc
 *.pyo
+
+.idea/
